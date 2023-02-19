@@ -23,10 +23,15 @@ body {
   user-select: none;
 }
 
+#root > div {
+  min-height: 100vh;
+}
+
 a {
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  width: fit-content;
 }
 
 a:hover {
@@ -38,6 +43,10 @@ hr {
   border: none;
   height: 1px;
   width: 100%;
+}
+
+img {
+  aspect-ratio: .8;
 }
 
 ::-webkit-scrollbar {
