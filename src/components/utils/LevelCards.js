@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import LevelCard from './LevelCard';
-import rocketScene from '../../assets/waldoScenes/rocketScene.jpg';
-import unScene from '../../assets/waldoScenes/unScene.jpg';
-import dnaScene from '../../assets/waldoScenes/dnaScene.jpg';
+import rocketScene from '../../assets/waldoScenes/rocket.jpg';
+import unScene from '../../assets/waldoScenes/un-meeting.jpg';
+import dnaScene from '../../assets/waldoScenes/dna.jpg';
 
 const Levels = styled.div`
   justify-content: center;

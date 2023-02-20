@@ -23,7 +23,7 @@ const CharacterImg = styled.img`
   object-fit:cover;
 `;
 
-const PlayDropdown = ({ chars }) => {
+const PlayDropdown = ({ characters }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const handleClickDropdown = () => setShowDropdown(!showDropdown);
 
@@ -31,8 +31,8 @@ const PlayDropdown = ({ chars }) => {
     <DropdownContainer>
       <Icon path={mdiChevronUp} size={1.5} onClick={handleClickDropdown} />
       <Characters>
-        {chars.map((char) => (
-          <CharacterImg src={char.img} />
+        {characters.map((char) => (
+          <CharacterImg src={char.img} key={char.id} />
         ))}
       </Characters>
     </DropdownContainer>

@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,6 +18,7 @@ const app = initializeApp(firebaseConfig);
 // Export firestore database
 // It will be imported into your react app whenever it is needed
 export const db = getFirestore(app);
+export const storage = getStorage(app);
 
 // TODO set up dbs in firestore
 
@@ -37,28 +39,7 @@ export const db = getFirestore(app);
 //           }
 //     }
 
-// TODO read data
-// import { collection, getDocs } from "firebase/firestore";
-// import {db} from '../firebase';
-// Import { useState } from ‘react’;
 
-//    const [todos, setTodos] = useState([]);
-
-//     const fetchPost = async () => {
-
-//         await getDocs(collection(db, "todos"))
-//             .then((querySnapshot)=>{
-//                 const newData = querySnapshot.docs
-//                     .map((doc) => ({...doc.data(), id:doc.id }));
-//                 setTodos(newData);
-//                 console.log(todos, newData);
-//             })
-
-//     }
-
-//     useEffect(()=>{
-//         fetchPost();
-//     }, [])
 
 // TODO something to allow the user to login -> if they want to save their score they need to log in
 

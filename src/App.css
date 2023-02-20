@@ -47,6 +47,7 @@ hr {
 
 img {
   aspect-ratio: .8;
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {

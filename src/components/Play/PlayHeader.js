@@ -15,11 +15,11 @@ const PlayHeaderContainer = styled.div`
 width: 100%;
 `;
 
-const PlayHeader = ({ chars }) => {
+const PlayHeader = ({ characters }) => {
   return (
     <PlayHeaderContainer>
       <Title />
-      <PlayDropdown chars={chars} />
+      <PlayDropdown characters={characters} />
       <Timer />
     </PlayHeaderContainer>
   );
