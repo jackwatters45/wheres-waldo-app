@@ -35,8 +35,3 @@ const Leaderboard = () => {
 };
 
 export default Leaderboard;
-
-// <LeaderboardTable name={'DNA'} scores={testScores} />
-// <LeaderboardTable name={'United Nations'} scores={testScores} />
-
-// TODO selected

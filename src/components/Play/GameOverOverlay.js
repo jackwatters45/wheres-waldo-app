@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../../firebase';
+import BadWordsFilter from 'bad-words';
 
 const OverlayContainer = styled.div`
   position: fixed;
@@ -108,10 +111,26 @@ const StyledLink = styled(Link)`
 `;
 
 const GameOverOverlay = ({ time, id, handleResetGame }) => {
-  const [userName, setUserName] = useState();
-  const handleChange = (e) => setUserName(e.target.value);
+  // TODO if signed in stuff
 
-  // TODO set records
+  const [userName, setUserName] = useState('');
+  const handleChange = (e) => setUserName(e.target.value);
+  const handleSubmitScore = async (e) => {
+    e.preventDefault();
+
+    const filter = new BadWordsFilter();
+    const cleanUsername = filter.clean(userName);
+    try {
+      const docRef = await addDoc(collection(db, `${id}-scores`), {
+        time: time,
+        name: cleanUsername,
+        date: new Date(),
+      });
+      console.log('Document written with ID: ', docRef.id);
+    } catch (e) {
+      console.error('Error adding document: ', e);
+    }
+  };
 
   return (
     <OverlayContainer>
@@ -120,9 +139,16 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
         <SubmitPrompt>
           Submit your score on the global leaderboard!
         </SubmitPrompt>
-        <UsernameForm>
-          <UsernameLabel>Username</UsernameLabel>
-          <UsernameInput value={userName} onChange={handleChange} />
+        <UsernameForm onSubmit={handleSubmitScore}>
+          <UsernameLabel htmlFor="username">Username</UsernameLabel>
+          <UsernameInput
+            name="username"
+            required={true}
+            minLength={2}
+            maxLength={20}
+            value={userName}
+            onChange={handleChange}
+          />
           <UsernameSubmit type="submit">Submit</UsernameSubmit>
         </UsernameForm>
         <ButtonContainer>

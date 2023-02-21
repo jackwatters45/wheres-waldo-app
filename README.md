@@ -1,9 +1,9 @@
 # Where's Waldo App
 
-Play page is gonna need a timer and to display the characters that the player is searching for
-
-state or something for nav bar
-
-clicking logic
-
-static leaderboard
+- highlighting input
+- remove input when score submitted
+- displaying leaderboard
+- logging in from home screen
+- add score when logged in
+- reset timer and overlay
+- deploy

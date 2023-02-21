@@ -27,5 +27,3 @@ const LeaderboardRow = ({ className, rank, name, time, date }) => {
   );
 };
 export default LeaderboardRow;
-
-//  TODO max name length
