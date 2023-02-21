@@ -1,25 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import PlayHeader from './PlayHeader';
+import Title from '../utils/Title';
 import { doc, collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useParams } from 'react-router-dom';
 import sceneImgs from '../../assets/waldoScenes';
 import snakeToCamel from '../utils/snakeToCamel';
+import PlayDropdown from './PlayDropdown';
+import GameOverOverlay from './GameOverOverlay';
+
+const PlayHeaderContainer = styled.div`
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  height: fit-content;
+  padding: 10px 50px;
+  align-items: center;
+  background-color: var(--main-background-color);
+  width: 100%;
+`;
 
 const BackgroundImage = styled.img`
   width: 100%;
 `;
 
-// TODO add images and coordinates to other pages
-// TODO mark image or something when found
-// TODO logic for game over
-// TODO Timing
-// TODO login
-// TODO high score stuff
+const Timer = styled.h2`
+  justify-self: flex-end;
+`;
 
 const Play = () => {
   const { id } = useParams();
+
+  const [time, setTime] = useState(0);
+  const [isActive, setIsActive] = useState(false); // TODO
+  const handleStopTimer = () => setIsActive(false);
+  useEffect(() => {
+    let interval;
+    if (isActive)
+      interval = setInterval(() => setTime((seconds) => seconds + 0.1), 100);
+    return () => clearInterval(interval);
+  }, [isActive, time]);
 
   const [backgroundImg, setBackgroundImg] = useState();
   useEffect(() => {
@@ -43,7 +63,6 @@ const Play = () => {
 
     const fetchPost = async () => {
       const docRef = doc(db, 'levels', id);
-
       const collectionRef = collection(docRef, 'characters');
       const docsSnapshot = await getDocs(collectionRef);
 
@@ -60,10 +79,15 @@ const Play = () => {
     fetchPost();
   }, [id]);
 
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [isGameOver, setIsGameOver] = useState(true); // TODO
   useEffect(() => {
+    if (!characters.length) return;
+
     const allFound = characters.every((character) => character.found);
-    if (allFound) setIsGameOver(true);
+    if (!allFound) return;
+
+    handleStopTimer();
+    setIsGameOver(true);
   }, [characters]);
 
   const handleClick = (e) => {
@@ -86,15 +110,36 @@ const Play = () => {
     setCharacters([...charactersCopy]);
   };
 
+  const handleResetGame = () => {
+    const charactersCopy = [...characters];
+    charactersCopy.forEach((character) => (character.found = false));
+    setCharacters(charactersCopy);
+
+    setTime(0);
+    setIsActive(true);
+    setIsGameOver(false);
+  };
+
   return (
-    <div>
-      <PlayHeader characters={characters} />
+    <playcontainer>
+      {isGameOver && (
+        <GameOverOverlay
+          time={time}
+          handleResetGame={handleResetGame}
+          id={id}
+        />
+      )}
+      <PlayHeaderContainer>
+        <Title />
+        <PlayDropdown characters={characters} />
+        <Timer>{time.toFixed(1)}s</Timer>
+      </PlayHeaderContainer>
       <BackgroundImage
         src={backgroundImg}
         alt="Background Scene"
         onClick={handleClick}
       />
-    </div>
+    </playcontainer>
   );
 };
 
