@@ -37,7 +37,7 @@ const Play = () => {
   useEffect(() => {
     let interval;
     if (isActive)
-      interval = setInterval(() => setTime((seconds) => seconds + 0.1), 100);
+      interval = setInterval(() => setTime((seconds) => seconds + 0.01), 10);
     return () => clearInterval(interval);
   }, [isActive, time]);
 
@@ -124,7 +124,7 @@ const Play = () => {
     <playcontainer>
       {isGameOver && (
         <GameOverOverlay
-          time={time}
+          time={time.toFixed(2)}
           handleResetGame={handleResetGame}
           id={id}
         />
@@ -132,7 +132,7 @@ const Play = () => {
       <PlayHeaderContainer>
         <Title />
         <PlayDropdown characters={characters} />
-        <Timer>{time.toFixed(1)}s</Timer>
+        <Timer>{time.toFixed(2)}s</Timer>
       </PlayHeaderContainer>
       <BackgroundImage
         src={backgroundImg}

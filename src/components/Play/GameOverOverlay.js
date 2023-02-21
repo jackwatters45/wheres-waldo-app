@@ -39,6 +39,11 @@ const SubmitPrompt = styled.p`
   font-size: 16px;
 `;
 
+const SubmittedText = styled.h4`
+  margin: 2rem 0 0 0;
+  font-size: 16px;
+`;
+
 const UsernameForm = styled.form`
   display: grid;
   grid-template-rows: auto 1fr;
@@ -112,6 +117,7 @@ const StyledLink = styled(Link)`
 
 const GameOverOverlay = ({ time, id, handleResetGame }) => {
   // TODO if signed in stuff
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [userName, setUserName] = useState('');
   const handleChange = (e) => setUserName(e.target.value);
@@ -122,14 +128,16 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
     const cleanUsername = filter.clean(userName);
     try {
       const docRef = await addDoc(collection(db, `${id}-scores`), {
-        time: time,
+        time: parseFloat(time),
         name: cleanUsername,
         date: new Date(),
       });
       console.log('Document written with ID: ', docRef.id);
+      setIsSubmitted(true);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
+
   };
 
   return (
@@ -139,18 +147,26 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
         <SubmitPrompt>
           Submit your score on the global leaderboard!
         </SubmitPrompt>
-        <UsernameForm onSubmit={handleSubmitScore}>
-          <UsernameLabel htmlFor="username">Username</UsernameLabel>
-          <UsernameInput
-            name="username"
-            required={true}
-            minLength={2}
-            maxLength={20}
-            value={userName}
-            onChange={handleChange}
-          />
-          <UsernameSubmit type="submit">Submit</UsernameSubmit>
-        </UsernameForm>
+        {!isSubmitted ? (
+          <UsernameForm onSubmit={handleSubmitScore}>
+            <UsernameLabel htmlFor="username">Username</UsernameLabel>
+            <UsernameInput
+              autoFocus={true}
+              name="username"
+              required={true}
+              minLength={2}
+              maxLength={20}
+              value={userName}
+              onChange={handleChange}
+            />
+            <UsernameSubmit type="submit">Submit</UsernameSubmit>
+          </UsernameForm>
+        ) : (
+          <SubmittedText>
+            You have successfully submitted your score. Check the leaderboard to
+            see where you rank!
+          </SubmittedText>
+        )}
         <ButtonContainer>
           <StyledLink to={'/'}>
             <HomeButton>Home</HomeButton>

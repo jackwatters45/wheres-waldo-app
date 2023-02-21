@@ -23,7 +23,7 @@ body {
   user-select: none;
 }
 
-#root > div {
+#root>div {
   min-height: 100vh;
 }
 
@@ -48,6 +48,10 @@ hr {
 img {
   aspect-ratio: .8;
   cursor: pointer;
+}
+
+input:focus {
+  outline: none;
 }
 
 ::-webkit-scrollbar {

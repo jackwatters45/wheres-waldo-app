@@ -33,7 +33,7 @@ const LevelCards = ({ id, page, className }) => {
         to={`/${page}/dna`}
         name={'DNA'}
         img={dnaScene}
-        highScore={18.4}
+        highScore={0}
         id={id}
       />
     </Levels>

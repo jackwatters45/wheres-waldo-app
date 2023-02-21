@@ -44,10 +44,12 @@ const LevelCard = ({ name, img, highScore, to, id }) => {
       <PreviewCard style={{ backgroundColor: backgroundColor }}>
         <PreviewImage src={img} alt="Scene Preview" />
         <LevelName>{name}</LevelName>
-        <HighScoreContainer>
-          <p>High Score</p>
-          <p>{highScore}s</p>
-        </HighScoreContainer>
+        {!!highScore && (
+          <HighScoreContainer>
+            <p>High Score</p>
+            <p>{highScore}s</p>
+          </HighScoreContainer>
+        )}
       </PreviewCard>
     </StyledLink>
   );
