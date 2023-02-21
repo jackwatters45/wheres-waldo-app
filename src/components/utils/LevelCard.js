@@ -15,6 +15,9 @@ const PreviewCard = styled.div`
   border-radius: 4px;
   box-shadow: rgb(15 15 15 / 10%) 0px 0px 0px 1px,
     rgb(15 15 15 / 10%) 0px 2px 4px;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const PreviewImage = styled.img`

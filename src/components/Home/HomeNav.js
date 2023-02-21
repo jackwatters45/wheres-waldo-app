@@ -9,6 +9,9 @@ const LeaderBoard = styled(Link)`
   align-self: center;
   font-size: 24px;
   font-weight: 700;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const StyledNav = styled.nav`

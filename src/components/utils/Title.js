@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 
 const TitleText = styled.h1`
   font-size: 28px;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const Title = () => (

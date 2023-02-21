@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { mdiChevronDown, mdiChevronUp } from '@mdi/js';
 import Icon from '@mdi/react';
 import styled from 'styled-components';
+import CheckboxWithFill from '../utils/CheckboxWithFill';
 
 const DropdownContainer = styled.div`
   display: flex;
@@ -19,8 +20,11 @@ const Characters = styled.div`
 
 const CharacterImg = styled.img`
   height: 140px;
-  // width: 100px;
-  object-fit:cover;
+  object-fit: cover;
+`;
+
+const CharacterImgGreenBorder = styled(CharacterImg)`
+  outline: solid 3px green;
 `;
 
 const PlayDropdown = ({ characters }) => {
@@ -31,9 +35,16 @@ const PlayDropdown = ({ characters }) => {
     <DropdownContainer>
       <Icon path={mdiChevronUp} size={1.5} onClick={handleClickDropdown} />
       <Characters>
-        {characters.map((char) => (
-          <CharacterImg src={char.img} key={char.id} />
-        ))}
+        {characters.map((char, index) =>
+          char.found ? (
+            <>
+              <CharacterImgGreenBorder src={char.img} key={char.id} />
+              <CheckboxWithFill index={index} />
+            </>
+          ) : (
+            <CharacterImg src={char.img} key={char.id} />
+          ),
+        )}
       </Characters>
     </DropdownContainer>
   ) : (

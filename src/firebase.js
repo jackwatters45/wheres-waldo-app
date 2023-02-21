@@ -20,8 +20,6 @@ const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-// TODO set up dbs in firestore
-
 // TODO how to add data to db
 // import { collection, addDoc } from "firebase/firestore";
 // import {db} from '../firebase';
@@ -38,9 +36,5 @@ export const storage = getStorage(app);
 //             console.error("Error adding document: ", e);
 //           }
 //     }
-
-
-
-// TODO something to allow the user to login -> if they want to save their score they need to log in
 
 // TODO deploy
