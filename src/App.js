@@ -3,17 +3,28 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Leaderboard from './components/Leaderboard/Leaderboard';
 import Play from './components/Play/Play';
-import React from 'react';
+import React, { createContext, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import AuthForm from './auth/AuthForm';
+import { auth } from './firebase';
 
-
+export const UserContext = createContext();
 const App = () => {
+  const [user, setUser] = useState();
+  onAuthStateChanged(auth, (user) => setUser(user));
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/play/:id" element={<Play />} />
-        <Route path="/leaderboard/:id" element={<Leaderboard />} />
-      </Routes>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/play/:id" element={<Play />} />
+          <Route path="/leaderboard/:id" element={<Leaderboard />} />
+          <Route path="/login" element={<AuthForm />} />
+          {/* TODO */}
+          <Route path="/sign-in" element={<AuthForm />} />
+        </Routes>
+      </UserContext.Provider>
     </BrowserRouter>
   );
 };

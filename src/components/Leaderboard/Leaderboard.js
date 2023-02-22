@@ -28,13 +28,11 @@ const LeaderboardTableContainer = styled.div`
   flex-direction: column;
   height: fit-content;
   background-color: var(--card-background-color);
-
   padding: 10px;
   border-radius: 4px;
   box-shadow: rgb(15 15 15 / 10%) 0px 0px 0px 1px,
     rgb(15 15 15 / 10%) 0px 2px 4px;
   grid-column: 1/2;
-  margin: 10px 0 0 0;
   width: 800px;
 `;
 
