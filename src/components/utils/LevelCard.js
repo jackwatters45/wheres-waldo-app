@@ -2,7 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link, useParams } from 'react-router-dom';
 import { UserContext } from '../../App';
-import useHighScore from './useUserHighScore';
+import { db } from '../../firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 const StyledLink = styled(Link)`
   height: fit-content;
@@ -39,10 +40,30 @@ const LevelCard = ({ name, img, to, levelId }) => {
   const { id } = useParams();
   const { user } = useContext(UserContext);
 
-  const [highScore, fetchHighScore] = useHighScore();
+  const [highScore, setHighScore] = useState();
   useEffect(() => {
-    fetchHighScore(levelId, user);
-  });
+    const fetchScore = async () => {
+      if (!user) return;
+
+      const collectionRef = query(
+        collection(db, `${levelId}-scores`),
+        where('user', '==', user.uid),
+      );
+      const docsSnapshot = await getDocs(collectionRef);
+
+      const scoresArr = [];
+      docsSnapshot.forEach((doc) => {
+        const date = new Date(doc.get('date').seconds * 1000);
+        const time = doc.get('time');
+        const name = doc.get('name');
+        scoresArr.push({ date, time, name });
+      });
+
+      if (!scoresArr.length) return;
+      setHighScore(scoresArr.sort((a, b) => a.time - b.time)[0]);
+    };
+    fetchScore();
+  }, [levelId, user]);
 
   const [selected, setSelected] = useState();
   useEffect(() => {
@@ -61,7 +82,7 @@ const LevelCard = ({ name, img, to, levelId }) => {
         {highScore && (
           <HighScoreContainer>
             <p>High Score</p>
-            <p>{highScore.toFixed(2)}s</p>
+            <p>{highScore.time.toFixed(2)}s</p>
           </HighScoreContainer>
         )}
       </PreviewCard>

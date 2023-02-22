@@ -1,7 +1,6 @@
 # Where's Waldo App
 
-- display player score at top of leader boards
-- Log in form
+- Log in form (make sure display name has max length)
 - other login methods
 - reset timer and overlay + delete bad scores
 - add data

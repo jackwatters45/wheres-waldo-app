@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Title from '../utils/Title';
@@ -52,7 +52,6 @@ const LogOutButton = styled.button`
 
 const HomeNav = () => {
   const { user } = useContext(UserContext);
-  useEffect(()=> console.log(user))
   const signOutUser = async () => await signOut(auth);
 
   return (
