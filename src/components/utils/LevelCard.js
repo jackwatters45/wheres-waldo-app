@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { UserContext } from '../../App';
+import useHighScore from './useUserHighScore';
 
 const StyledLink = styled(Link)`
   height: fit-content;
@@ -33,25 +35,38 @@ const HighScoreContainer = styled.div`
   grid-template-columns: 1fr auto;
 `;
 
-const LevelCard = ({ name, img, highScore, to, id }) => {
-  const backgroundColor =
-    id === name.toLowerCase().replace(' ', '-')
-      ? 'var(--empty-font-color)'
-      : 'var(--card-background-color)';
+const LevelCard = ({ name, img, to, levelId }) => {
+  const { id } = useParams();
+  const { user } = useContext(UserContext);
+
+  const [highScore, fetchHighScore] = useHighScore();
+  useEffect(() => {
+    fetchHighScore(levelId, user);
+  });
+
+  const [selected, setSelected] = useState();
+  useEffect(() => {
+    setSelected(
+      id === levelId
+        ? 'var(--empty-font-color)'
+        : 'var(--card-background-color)',
+    );
+  }, [id, levelId]);
 
   return (
     <StyledLink to={to}>
-      <PreviewCard style={{ backgroundColor: backgroundColor }}>
+      <PreviewCard style={{ backgroundColor: selected }}>
         <PreviewImage src={img} alt="Scene Preview" />
         <LevelName>{name}</LevelName>
-        {!!highScore && (
+        {highScore && (
           <HighScoreContainer>
             <p>High Score</p>
-            <p>{highScore}s</p>
+            <p>{highScore.toFixed(2)}s</p>
           </HighScoreContainer>
         )}
       </PreviewCard>
     </StyledLink>
   );
 };
+
 export default LevelCard;
