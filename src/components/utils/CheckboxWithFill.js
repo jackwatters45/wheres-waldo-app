@@ -9,14 +9,14 @@ const StyledIcon = styled(Icon)`
 `;
 
 const CheckboxWithFill = ({ index }) => {
-  const getPosition = () => index * 132 + 86
+  const getPosition = () => index * 132 + 86;
   return (
     <>
       <StyledIcon
         path={mdiCheckboxBlank}
         size={0.9}
         color={'white'}
-        style={{ marginLeft:  getPosition()}}
+        style={{ marginLeft: getPosition() }}
       />
       <StyledIcon
         path={mdiCheckboxMarked}

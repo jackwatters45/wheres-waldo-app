@@ -62,10 +62,8 @@ const Play = () => {
     resetCharacters();
 
     const fetchCharacters = async () => {
-      const docRef = doc(db, 'levels', id);
-      const collectionRef = collection(docRef, 'characters');
+      const collectionRef = collection(doc(db, 'levels', id), 'characters');
       const docsSnapshot = await getDocs(collectionRef);
-
       docsSnapshot.forEach((doc) => {
         const id = doc.id;
         const coordinates = doc.get('coordinates');
@@ -79,13 +77,9 @@ const Play = () => {
     fetchCharacters();
   }, [id]);
 
-  const [isGameOver, setIsGameOver] = useState(false); // TODO
+  const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
-    if (!characters.length) return;
-
-    const allFound = characters.every((character) => character.found);
-    if (!allFound) return;
-
+    if (!characters.length || !characters.every((char) => char.found)) return;
     handleStopTimer();
     setIsGameOver(true);
   }, [characters]);

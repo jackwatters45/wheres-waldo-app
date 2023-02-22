@@ -12,7 +12,7 @@ const Levels = styled.div`
   padding: 25px 0;
 `;
 
-const LevelCards = ({  page, className }) => {
+const LevelCards = ({ page, className }) => {
   return (
     <Levels className={className}>
       <LevelCard
@@ -27,7 +27,12 @@ const LevelCards = ({  page, className }) => {
         img={unScene}
         levelId={'un-meeting'}
       />
-      <LevelCard to={`/${page}/dna`} name={'DNA'} img={dnaScene} levelId={'dna'} />
+      <LevelCard
+        to={`/${page}/dna`}
+        name={'DNA'}
+        img={dnaScene}
+        levelId={'dna'}
+      />
     </Levels>
   );
 };
