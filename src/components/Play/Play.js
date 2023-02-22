@@ -32,7 +32,7 @@ const Play = () => {
   const { id } = useParams();
 
   const [time, setTime] = useState(0);
-  const [isActive, setIsActive] = useState(false); // TODO
+  const [isActive, setIsActive] = useState(true); // TODO
   const handleStopTimer = () => setIsActive(false);
   useEffect(() => {
     let interval;
@@ -61,7 +61,7 @@ const Play = () => {
     const resetCharacters = () => setCharacters([]);
     resetCharacters();
 
-    const fetchPost = async () => {
+    const fetchCharacters = async () => {
       const docRef = doc(db, 'levels', id);
       const collectionRef = collection(docRef, 'characters');
       const docsSnapshot = await getDocs(collectionRef);
@@ -76,10 +76,10 @@ const Play = () => {
         ]);
       });
     };
-    fetchPost();
+    fetchCharacters();
   }, [id]);
 
-  const [isGameOver, setIsGameOver] = useState(true); // TODO
+  const [isGameOver, setIsGameOver] = useState(false); // TODO
   useEffect(() => {
     if (!characters.length) return;
 
@@ -124,7 +124,7 @@ const Play = () => {
     <playcontainer>
       {isGameOver && (
         <GameOverOverlay
-          time={time.toFixed(2)}
+          time={time}
           handleResetGame={handleResetGame}
           id={id}
         />

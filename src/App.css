@@ -54,6 +54,10 @@ input:focus {
   outline: none;
 }
 
+ul {
+  list-style-type: none
+}
+
 ::-webkit-scrollbar {
   height: 10px;
   background: transparent;

@@ -127,23 +127,21 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
     const filter = new BadWordsFilter();
     const cleanUsername = filter.clean(userName);
     try {
-      const docRef = await addDoc(collection(db, `${id}-scores`), {
+      await addDoc(collection(db, `${id}-scores`), {
         time: parseFloat(time),
         name: cleanUsername,
         date: new Date(),
       });
-      console.log('Document written with ID: ', docRef.id);
       setIsSubmitted(true);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
-
   };
 
   return (
     <OverlayContainer>
       <OverlayContentContainer>
-        <Score>You finished in {time} seconds.</Score>
+        <Score>You finished in {time.toFixed(2)} seconds.</Score>
         <SubmitPrompt>
           Submit your score on the global leaderboard!
         </SubmitPrompt>
