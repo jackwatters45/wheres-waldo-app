@@ -65,7 +65,7 @@ const HomeNav = () => {
         </LoginContainer>
       ) : (
         <LoginContainer>
-          <StyledLoginLink to={'/login'}>Login</StyledLoginLink>
+          <StyledLoginLink to={'/wheres-waldo-app/login'}>Login</StyledLoginLink>
           <LoginText>to view/save your high scores</LoginText>
         </LoginContainer>
       )}

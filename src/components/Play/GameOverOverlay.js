@@ -112,7 +112,7 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
         {user ? (
           <SubmittedText>
             Your score has been successfully submitted. Check the{' '}
-            <UnderlinedLink to={`/leaderboard/${id}`}>
+            <UnderlinedLink to={`/wheres-waldo-app/leaderboard/${id}`}>
               Leaderboard
             </UnderlinedLink>{' '}
             to see where you rank!
@@ -121,7 +121,7 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
           <SubmitScoreForm id={id} time={time} submitScore={submitScore} />
         )}
         <ButtonContainer>
-          <ButtonLink to={'/'}>
+          <ButtonLink to={'/wheres-waldo-app/'}>
             <HomeButton>Home</HomeButton>
           </ButtonLink>
           <PlayAgainButton onClick={handleResetGame}>

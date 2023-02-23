@@ -82,7 +82,6 @@ const StyledIcon = styled(Icon)`
 `;
 
 const SubmitButton = styled.input`
-  margin-top: 1rem;
   color: var(--main-font-color);
   font-size: 24px;
   border: none;
@@ -107,6 +106,21 @@ const StyledLink = styled(Link)`
   text-decoration: underline;
 `;
 
+const ErrorDiv = styled.div`
+  height: 18px;
+  margin: 0 0 10px 0;
+  display: flex;
+  justify-content: center;
+`;
+
+const Error = styled.p`
+  background-color: #7f1d1d;
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 0px 4px;
+  width: fit-content;
+`;
+
 const CreateAccount = () => {
   const navigate = useNavigate();
   auth.useDeviceLanguage();
@@ -119,6 +133,7 @@ const CreateAccount = () => {
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
+  const [errorMessage, setErrorMessage] = useState('');
   const createAccount = async (e) => {
     e.preventDefault();
     if (
@@ -135,9 +150,13 @@ const CreateAccount = () => {
         password.value,
       );
       await updateProfile(user, { displayName: username.value });
-      navigate('/');
+      navigate('/wheres-waldo-app/');
     } catch (e) {
-      // TODO -> Error text
+      if (e.message.includes('auth/email-already-in-use'))
+        setErrorMessage(
+          'This is already associated with an account. Please try logging in instead.',
+        );
+      setErrorMessage('There was an error creating an account.');
     }
   };
 
@@ -203,12 +222,12 @@ const CreateAccount = () => {
             />
           </div>
         </FormRow>
+        <ErrorDiv>{errorMessage ? <Error>{errorMessage}</Error> : ''}</ErrorDiv>
         <SubmitButton type="submit" value={'Create Account'} />
         <LoginLinkDiv>
           Already have an account?{' '}
-          <StyledLink to={'/login'}>Log in.</StyledLink>
+          <StyledLink to={'/wheres-waldo-app/login'}>Log in.</StyledLink>
         </LoginLinkDiv>
-        {/* TODO error text */}
       </FormContainer>
     </Container>
   );

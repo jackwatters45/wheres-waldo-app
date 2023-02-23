@@ -85,7 +85,8 @@ const FormRow = styled.div`
 `;
 
 const StyledLabel = styled.label`
-font-size: 22px`
+  font-size: 22px;
+`;
 
 const StyledInput = styled.input`
   background-color: transparent;
@@ -118,7 +119,6 @@ const StyledIcon = styled(Icon)`
 `;
 
 const SubmitButton = styled.input`
-  margin-top: 1rem;
   color: var(--main-font-color);
   font-size: 24px;
   border: none;
@@ -144,6 +144,21 @@ const StyledLink = styled(Link)`
   text-decoration: underline;
 `;
 
+const ErrorDiv = styled.div`
+  height: 18px;
+  margin: 0 0 10px 0;
+  display: flex;
+  justify-content: center;
+`;
+
+const Error = styled.p`
+  background-color: #7f1d1d;
+  border-radius: 4px;
+  font-size: 12px;
+  padding: 0px 4px;
+  width: fit-content;
+`;
+
 const Login = () => {
   const navigate = useNavigate();
   auth.useDeviceLanguage();
@@ -154,13 +169,21 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
+  const [errorMessage, setErrorMessage] = useState('');
+
   const loginEmail = async (e) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
-      navigate('/');
+      navigate('/wheres-waldo-app/');
     } catch (e) {
-      // TODO -> Error text
+      if (e.message.includes('auth/user-not-found'))
+        setErrorMessage(
+          'No account associated with that email. Please try again or create an account.',
+        );
+      setErrorMessage(
+        'There was an error signing in. Please try again or use a different method.',
+      );
     }
   };
 
@@ -168,9 +191,11 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      navigate('/');
+      navigate('/wheres-waldo-app/');
     } catch {
-      // TODO
+      setErrorMessage(
+        'There was an error signing in. Please try again or use a different method.',
+      );
     }
   };
 
@@ -178,9 +203,11 @@ const Login = () => {
     const provider = new GithubAuthProvider();
     try {
       await signInWithPopup(auth, provider);
-      navigate('/');
+      navigate('/wheres-waldo-app/');
     } catch {
-      // TODO
+      setErrorMessage(
+        'There was an error signing in. Please try again or use a different method.',
+      );
     }
   };
 
@@ -189,7 +216,6 @@ const Login = () => {
       <Container>
         <Header>
           <FormHeader>Log in</FormHeader>
-
           <PopupSignIns>
             <StyledButton onClick={loginGoogle}>
               <StyledPopupIcon path={mdiGoogle} size={1} />
@@ -228,12 +254,14 @@ const Login = () => {
               />
             </div>
           </FormRow>
+          <ErrorDiv>
+            {errorMessage ? <Error>{errorMessage}</Error> : ''}
+          </ErrorDiv>
           <SubmitButton type="submit" value={'Log in'} />
           <LoginLinkDiv>
             Don't have an account?{' '}
             <StyledLink to={'/create-account'}>Create an account.</StyledLink>
           </LoginLinkDiv>
-          {/* TODO error text */}
         </StyledForm>
       </Container>
     </Page>

@@ -17,7 +17,7 @@ const Link = styled.a`
 
 const Footer = () => (
   <FooterContainer>
-    <p>Copyright © 2022 jackwatters45</p>
+    <p>Copyright © 2023 jackwatters45</p>
     <Link
       href="https://github.com/jackwatters45/"
       target="_blank"

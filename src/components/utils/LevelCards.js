@@ -16,19 +16,19 @@ const LevelCards = ({ page, className }) => {
   return (
     <Levels className={className}>
       <LevelCard
-        to={`/${page}/rocket`}
+        to={`/wheres-waldo-app/${page}/rocket`}
         name={'Rocket'}
         img={rocketScene}
         levelId={'rocket'}
       />
       <LevelCard
-        to={`/${page}/un-meeting`}
+        to={`/wheres-waldo-app/${page}/un-meeting`}
         name={'UN Meeting'}
         img={unScene}
         levelId={'un-meeting'}
       />
       <LevelCard
-        to={`/${page}/dna`}
+        to={`/wheres-waldo-app/${page}/dna`}
         name={'DNA'}
         img={dnaScene}
         levelId={'dna'}

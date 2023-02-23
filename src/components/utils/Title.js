@@ -9,7 +9,7 @@ const TitleText = styled.h1`
 `;
 
 const Title = () => (
-  <Link to="/">
+  <Link to="/wheres-waldo-app/">
     <TitleText>Where's Waldo</TitleText>
   </Link>
 );

@@ -49,7 +49,7 @@ const StyledLoginLink = styled(Link)`
   text-decoration: underline;
 `;
 
-const SubmitScoreForm = ({ time, id, submitScore }) => {
+const SubmitScoreForm = ({ submitScore }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [userName, setUserName] = useState('');
@@ -81,7 +81,7 @@ const SubmitScoreForm = ({ time, id, submitScore }) => {
         <SubmittedText>
           You have successfully submitted your score. Check the leaderboard to
           see if you rank!{' '}
-          <StyledLoginLink to={'/login'}>Log in</StyledLoginLink> to view/save
+          <StyledLoginLink to={'/wheres-waldo-app/login'}>Log in</StyledLoginLink> to view/save
           your high scores
         </SubmittedText>
       )}
