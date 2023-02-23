@@ -59,6 +59,7 @@ const Pagination = ({ onPageChange, totalCount, currentPage }) => {
         <PageNumber
           onClick={() => onPageChange(pageNumber)}
           style={{ backgroundColor: getSelected(pageNumber) }}
+          key={pageNumber}
         >
           {pageNumber}
         </PageNumber>

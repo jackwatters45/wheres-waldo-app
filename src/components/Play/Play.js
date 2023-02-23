@@ -32,7 +32,7 @@ const Play = () => {
   const { id } = useParams();
 
   const [time, setTime] = useState(0);
-  const [isActive, setIsActive] = useState(true); // TODO
+  const [isActive, setIsActive] = useState(true);
   const handleStopTimer = () => setIsActive(false);
   useEffect(() => {
     let interval;
@@ -43,7 +43,7 @@ const Play = () => {
 
   const [backgroundImg, setBackgroundImg] = useState();
   useEffect(() => {
-    const getBackgroundImgLocal = async () =>
+    const getBackgroundImgLocal = () =>
       setBackgroundImg(sceneImgs[snakeToCamel(id)]);
     getBackgroundImgLocal();
     // how do using firebase storage
@@ -54,7 +54,7 @@ const Play = () => {
     //   // setBackgroundImg(backgroundImg);
     // };
     // getBackgroundImg();
-  }, [id]);
+  }, [backgroundImg, id]);
 
   const [characters, setCharacters] = useState([]);
   useEffect(() => {
@@ -62,10 +62,8 @@ const Play = () => {
     resetCharacters();
 
     const fetchCharacters = async () => {
-      const docRef = doc(db, 'levels', id);
-      const collectionRef = collection(docRef, 'characters');
+      const collectionRef = collection(doc(db, 'levels', id), 'characters');
       const docsSnapshot = await getDocs(collectionRef);
-
       docsSnapshot.forEach((doc) => {
         const id = doc.id;
         const coordinates = doc.get('coordinates');
@@ -79,13 +77,9 @@ const Play = () => {
     fetchCharacters();
   }, [id]);
 
-  const [isGameOver, setIsGameOver] = useState(false); // TODO
+  const [isGameOver, setIsGameOver] = useState(false);
   useEffect(() => {
-    if (!characters.length) return;
-
-    const allFound = characters.every((character) => character.found);
-    if (!allFound) return;
-
+    if (!characters.length || !characters.every((char) => char.found)) return;
     handleStopTimer();
     setIsGameOver(true);
   }, [characters]);

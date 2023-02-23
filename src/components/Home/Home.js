@@ -15,12 +15,11 @@ const StyledLevelCards = styled(LevelCards)`
   }
 `;
 
-//  TODO allow login and display scores
-const Home = (props) => {
+const Home = () => {
   return (
     <HomeContainer>
       <HomeNav />
-      <StyledLevelCards page={'play'} />
+      <StyledLevelCards page={'play'}  />
       <Footer />
     </HomeContainer>
   );

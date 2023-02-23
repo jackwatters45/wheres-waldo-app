@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase';
 import BadWordsFilter from 'bad-words';
+import { UserContext } from '../../App';
+import SubmitScoreForm from './SubmitScoreForm';
 
 const OverlayContainer = styled.div`
   position: fixed;
@@ -33,49 +35,6 @@ const OverlayContentContainer = styled.div`
 
 const Score = styled.h3`
   font-size: 32px;
-`;
-
-const SubmitPrompt = styled.p`
-  font-size: 16px;
-`;
-
-const SubmittedText = styled.h4`
-  margin: 2rem 0 0 0;
-  font-size: 16px;
-`;
-
-const UsernameForm = styled.form`
-  display: grid;
-  grid-template-rows: auto 1fr;
-  grid-template-columns: 3fr 1fr;
-  margin: 2rem 0 0 0;
-`;
-
-const UsernameLabel = styled.label`
-  margin: 8px;
-  height: 20px;
-`;
-
-const UsernameInput = styled.input`
-  background-color: transparent;
-  border: solid var(--main-font-color);
-  border-radius: 4px 0 0 4px;
-  color: var(--main-font-color);
-  font-size: 18px;
-  padding: 0 8px;
-  grid-row: 2;
-  height: 40px;
-  outline: none:
-`;
-
-const UsernameSubmit = styled.button`
-  grid-row: 2;
-  font-size: 22px;
-  border: solid var(--main-font-color);
-  border-radius: 0 4px 4px 0;
-  background-color: transparent;
-  height: 40px;
-  color: var(--main-font-color);
 `;
 
 const ButtonContainer = styled.div`
@@ -111,19 +70,27 @@ const PlayAgainButton = styled(StyledButton)`
   }
 `;
 
-const StyledLink = styled(Link)`
+const ButtonLink = styled(Link)`
   height: fit-content;
 `;
 
+const UnderlinedLink = styled(Link)`
+  text-decoration: underline;
+`;
+
+const SubmittedText = styled.h4`
+  margin: 2rem 0 0 0;
+  font-size: 16px;
+`;
+
 const GameOverOverlay = ({ time, id, handleResetGame }) => {
-  // TODO if signed in stuff
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { user } = useContext(UserContext);
 
-  const [userName, setUserName] = useState('');
-  const handleChange = (e) => setUserName(e.target.value);
-  const handleSubmitScore = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (user) submitScore(user.email);
+  });
 
+  const submitScore = async (userName) => {
     const filter = new BadWordsFilter();
     const cleanUsername = filter.clean(userName);
     try {
@@ -131,8 +98,8 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
         time: parseFloat(time),
         name: cleanUsername,
         date: new Date(),
+        user: user ? user.uid : null,
       });
-      setIsSubmitted(true);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
@@ -142,33 +109,21 @@ const GameOverOverlay = ({ time, id, handleResetGame }) => {
     <OverlayContainer>
       <OverlayContentContainer>
         <Score>You finished in {time.toFixed(2)} seconds.</Score>
-        <SubmitPrompt>
-          Submit your score on the global leaderboard!
-        </SubmitPrompt>
-        {!isSubmitted ? (
-          <UsernameForm onSubmit={handleSubmitScore}>
-            <UsernameLabel htmlFor="username">Username</UsernameLabel>
-            <UsernameInput
-              autoFocus={true}
-              name="username"
-              required={true}
-              minLength={2}
-              maxLength={20}
-              value={userName}
-              onChange={handleChange}
-            />
-            <UsernameSubmit type="submit">Submit</UsernameSubmit>
-          </UsernameForm>
-        ) : (
+        {user ? (
           <SubmittedText>
-            You have successfully submitted your score. Check the leaderboard to
-            see where you rank!
+            Your score has been successfully submitted. Check the{' '}
+            <UnderlinedLink to={`/leaderboard/${id}`}>
+              Leaderboard
+            </UnderlinedLink>{' '}
+            to see where you rank!
           </SubmittedText>
+        ) : (
+          <SubmitScoreForm id={id} time={time} submitScore={submitScore} />
         )}
         <ButtonContainer>
-          <StyledLink to={'/'}>
+          <ButtonLink to={'/'}>
             <HomeButton>Home</HomeButton>
-          </StyledLink>
+          </ButtonLink>
           <PlayAgainButton onClick={handleResetGame}>
             Play Again
           </PlayAgainButton>
