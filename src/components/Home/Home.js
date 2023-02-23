@@ -15,7 +15,6 @@ const StyledLevelCards = styled(LevelCards)`
   }
 `;
 
-//  TODO allow login and display scores
 const Home = () => {
   return (
     <HomeContainer>

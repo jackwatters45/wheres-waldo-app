@@ -32,7 +32,7 @@ const Play = () => {
   const { id } = useParams();
 
   const [time, setTime] = useState(0);
-  const [isActive, setIsActive] = useState(true); // TODO
+  const [isActive, setIsActive] = useState(true);
   const handleStopTimer = () => setIsActive(false);
   useEffect(() => {
     let interval;
@@ -43,7 +43,7 @@ const Play = () => {
 
   const [backgroundImg, setBackgroundImg] = useState();
   useEffect(() => {
-    const getBackgroundImgLocal = async () =>
+    const getBackgroundImgLocal = () =>
       setBackgroundImg(sceneImgs[snakeToCamel(id)]);
     getBackgroundImgLocal();
     // how do using firebase storage
@@ -54,7 +54,7 @@ const Play = () => {
     //   // setBackgroundImg(backgroundImg);
     // };
     // getBackgroundImg();
-  }, [id]);
+  }, [backgroundImg, id]);
 
   const [characters, setCharacters] = useState([]);
   useEffect(() => {

@@ -60,8 +60,7 @@ const HomeNav = () => {
       <LeaderBoard to="/leaderboard/rocket">Leaderboard</LeaderBoard>
       {user ? (
         <LoginContainer>
-          {/* TODO change to display name once form complete */}
-          <LoginText>Welcome, {user.email} - </LoginText>
+          <LoginText>Welcome, {user.displayName || user.email} - </LoginText>
           <LogOutButton onClick={signOutUser}>Sign Out</LogOutButton>
         </LoginContainer>
       ) : (
