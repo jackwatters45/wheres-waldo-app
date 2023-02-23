@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/wheres-waldo-app/static/css/main.e2733774.css",
-    "main.js": "/wheres-waldo-app/static/js/main.3e295b90.js",
+    "main.js": "/wheres-waldo-app/static/js/main.a1356324.js",
     "static/media/rocket.jpg": "/wheres-waldo-app/static/media/rocket.876f1cb00b773ebaa7ab.jpg",
     "static/media/dna.jpg": "/wheres-waldo-app/static/media/dna.efb8c3b6c7c86f3e8ee2.jpg",
     "static/media/un-meeting.jpg": "/wheres-waldo-app/static/media/un-meeting.14614b5c5d434154f7e8.jpg",
     "index.html": "/wheres-waldo-app/index.html",
     "main.e2733774.css.map": "/wheres-waldo-app/static/css/main.e2733774.css.map",
-    "main.3e295b90.js.map": "/wheres-waldo-app/static/js/main.3e295b90.js.map"
+    "main.a1356324.js.map": "/wheres-waldo-app/static/js/main.a1356324.js.map"
   },
   "entrypoints": [
     "static/css/main.e2733774.css",
-    "static/js/main.3e295b90.js"
+    "static/js/main.a1356324.js"
   ]
 }
