@@ -57,7 +57,7 @@ const HomeNav = () => {
   return (
     <StyledNav>
       <Title />
-      <LeaderBoard to="/leaderboard/rocket">Leaderboard</LeaderBoard>
+      <LeaderBoard to="/wheres-waldo-app/leaderboard/rocket">Leaderboard</LeaderBoard>
       {user ? (
         <LoginContainer>
           <LoginText>Welcome, {user.displayName || user.email} - </LoginText>
